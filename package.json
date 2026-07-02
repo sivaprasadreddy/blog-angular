@@ -12,13 +12,11 @@
     "format": "npx prettier --write ."
   },
   "dependencies": {
-    "@angular/animations": "^22.0.4",
     "@angular/common": "^22.0.4",
     "@angular/compiler": "^22.0.4",
     "@angular/core": "^22.0.4",
     "@angular/forms": "^22.0.4",
     "@angular/platform-browser": "^22.0.4",
-    "@angular/platform-browser-dynamic": "^22.0.4",
     "@angular/router": "^22.0.4",
     "@fortawesome/fontawesome-free": "^7.3.0",
     "bootstrap": "^5.3.8",

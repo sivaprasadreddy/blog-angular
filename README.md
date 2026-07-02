@@ -2,6 +2,9 @@
 
 A blog application using Angular.
 
+You can find the backend REST API implementations in the following repositories:
+- [spring-blog-api](https://github.com/sivaprasadreddy/spring-blog-api)
+
 ## Commands
 
 ```bash
