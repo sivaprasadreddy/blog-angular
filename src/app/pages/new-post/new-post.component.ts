@@ -21,7 +21,8 @@ export class NewPostComponent {
     slug: '',
     title: '',
     content: '',
-    createdByUserName: '',
+    authorId: 0,
+    authorName: '',
     createdAt: new Date(),
     comments: [],
   });

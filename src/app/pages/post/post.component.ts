@@ -24,7 +24,8 @@ export class PostComponent implements OnInit {
     slug: '',
     title: '',
     content: '',
-    createdByUserName: '',
+    authorId: 0,
+    authorName: '',
     createdAt: new Date(),
     comments: [],
   });

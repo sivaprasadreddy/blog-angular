@@ -5,7 +5,7 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string;
-  expires_at: string;
+  expiresAt: string;
   name: string;
   email: string;
   role: string;
@@ -36,7 +36,8 @@ export interface PostUserView {
   title: string;
   slug: string;
   content: string;
-  createdByUserName: string;
+  authorId: number;
+  authorName: string;
   createdAt: Date;
   comments: Comment[];
 }

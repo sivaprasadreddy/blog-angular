@@ -22,7 +22,8 @@ export class EditPostComponent implements OnInit {
     slug: '',
     title: '',
     content: '',
-    createdByUserName: '',
+    authorId: 0,
+    authorName: '',
     createdAt: new Date(),
     comments: [],
   });
