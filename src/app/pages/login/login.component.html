@@ -1,0 +1,30 @@
+<div class="container pt-3">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form class="card p-4" [formGroup]="loginForm" id="loginForm" method="post" (ngSubmit)="login()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input class="form-control" type="email" id="email" name="email"
+            formControlName="email"
+            value="admin@gmail.com">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input class="form-control" type="password" id="password" name="password"
+            formControlName="password"
+            value="admin">
+        </div>
+
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary"
+          [ngClass]="{'disabled': loginForm.invalid}">Login</button>
+        </div>
+        @if (error) {
+          <div class="text-danger text-center fw-bold">
+            <div>Invalid Email and Password</div>
+          </div>
+        }
+      </form>
+    </div>
+  </div>
+</div>
