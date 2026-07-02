@@ -1,9 +1,9 @@
-import {inject} from '@angular/core';
+import { inject } from '@angular/core';
 import { HttpRequest, HttpErrorResponse, HttpHandlerFn } from '@angular/common/http';
 
-import { tap} from 'rxjs';
-import {Router} from "@angular/router";
-import {AuthService} from "./services/auth.service";
+import { tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const authService = inject(AuthService);

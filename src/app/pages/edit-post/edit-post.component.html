@@ -1,35 +1,54 @@
 <div class="container">
   <div>
     <h1 class="display-4">Edit Post</h1>
-    <form class="card p-4" method="post"
-          id="editPostForm"
-          [formGroup]="editPostForm"
-          (ngSubmit)="updatePost()">
+    <form
+      class="card p-4"
+      method="post"
+      id="editPostForm"
+      [formGroup]="editPostForm"
+      (ngSubmit)="updatePost()"
+    >
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title"
-               placeholder="Enter title" name="title"
-               formControlName="title"
-               value="{{post().title}}"/>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          placeholder="Enter title"
+          name="title"
+          formControlName="title"
+          value="{{ post().title }}"
+        />
       </div>
       <div class="mb-3">
         <label for="slug" class="form-label">Slug</label>
-        <input type="text" class="form-control" id="slug"
-               placeholder="Enter slug" name="slug"
-               formControlName="slug"
-               value="{{post().slug}}"/>
+        <input
+          type="text"
+          class="form-control"
+          id="slug"
+          placeholder="Enter slug"
+          name="slug"
+          formControlName="slug"
+          value="{{ post().slug }}"
+        />
       </div>
       <div class="mb-3">
         <label for="content" class="form-label">Content</label>
-        <textarea class="form-control" id="content"
-              placeholder="Enter content" rows="8" name="content"
-              formControlName="content"
-              value="{{post().content}}"></textarea>
+        <textarea
+          class="form-control"
+          id="content"
+          placeholder="Enter content"
+          rows="8"
+          name="content"
+          formControlName="content"
+          value="{{ post().content }}"
+        ></textarea>
       </div>
 
       <div class="mb-3">
-        <button type="submit" class="btn btn-primary"
-                [disabled]="editPostForm.invalid">Save</button>
+        <button type="submit" class="btn btn-primary" [disabled]="editPostForm.invalid">
+          Save
+        </button>
       </div>
     </form>
   </div>

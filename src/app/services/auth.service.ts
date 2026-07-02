@@ -1,31 +1,42 @@
 import { Injectable, signal } from '@angular/core';
-import {CreateUserRequest, CreateUserResponse, LoginRequest, LoginResponse} from "./models";
-import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import { environment } from "../../environments/environment"
+import { CreateUserRequest, CreateUserResponse, LoginRequest, LoginResponse } from './models';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private apiBaseUrl = environment.apiBaseUrl;
+  private static readonly TOKEN_KEY = 'token';
+  private static readonly AUTH_KEY = 'auth';
+  private static readonly LOGIN_PATH = '/api/login';
+  private static readonly USERS_PATH = '/api/users';
 
-  private _loggedIn = signal<boolean>(!!localStorage.getItem("token"));
+  private readonly apiBaseUrl = environment.apiBaseUrl;
+
+  private _loggedIn = signal<boolean>(!!localStorage.getItem(AuthService.TOKEN_KEY));
   readonly loggedIn = this._loggedIn.asReadonly();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiBaseUrl}/api/login`, credentials);
+    return this.http.post<LoginResponse>(
+      `${this.apiBaseUrl}${AuthService.LOGIN_PATH}`,
+      credentials,
+    );
   }
 
   register(request: CreateUserRequest): Observable<CreateUserResponse> {
-    return this.http.post<CreateUserResponse>(`${this.apiBaseUrl}/api/users`, request);
+    return this.http.post<CreateUserResponse>(
+      `${this.apiBaseUrl}${AuthService.USERS_PATH}`,
+      request,
+    );
   }
 
-  setAuthUser(loginResponse: LoginResponse) {
-    localStorage.setItem("token", loginResponse.token)
-    localStorage.setItem("auth", JSON.stringify(loginResponse))
+  setAuthUser(loginResponse: LoginResponse): void {
+    localStorage.setItem(AuthService.TOKEN_KEY, loginResponse.token);
+    localStorage.setItem(AuthService.AUTH_KEY, JSON.stringify(loginResponse));
     this._loggedIn.set(true);
   }
 
@@ -34,28 +45,21 @@ export class AuthService {
   }
 
   loginUserName(): string {
-    let auth = localStorage.getItem("auth")
-    if(auth) {
-      let authJson = JSON.parse(auth) as Auth
-      return authJson.name
+    const auth = localStorage.getItem(AuthService.AUTH_KEY);
+    if (auth) {
+      const authJson = JSON.parse(auth) as LoginResponse;
+      return authJson.name;
     }
-    return ""
+    return '';
   }
 
-  logout() {
-    localStorage.removeItem("auth")
-    localStorage.removeItem("token")
+  logout(): void {
+    localStorage.removeItem(AuthService.AUTH_KEY);
+    localStorage.removeItem(AuthService.TOKEN_KEY);
     this._loggedIn.set(false);
   }
 
-  getAuthToken() : string | null {
-    return localStorage.getItem("token")
+  getAuthToken(): string | null {
+    return localStorage.getItem(AuthService.TOKEN_KEY);
   }
-}
-
-interface Auth {
-  token: string
-  email: string
-  name: string
-  role: string
 }

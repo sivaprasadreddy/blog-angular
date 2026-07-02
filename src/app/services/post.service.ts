@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import { environment } from "../../environments/environment"
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 import {
   Comment,
   CreateCommentPayload,
   CreatePostPayload,
   PostsResponse,
   PostUserView,
-  UpdatePostPayload
+  UpdatePostPayload,
 } from './models';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostService {
   private apiBaseUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getPosts(pageNo: number, query: string) {
-      let url = `${this.apiBaseUrl}/api/posts?page=${pageNo}`;
-      if(query) {
-        url += `&query=${query}`
-      }
-      return this.http.get<PostsResponse>(`${url}`);
+    let url = `${this.apiBaseUrl}/api/posts?page=${pageNo}`;
+    if (query) {
+      url += `&query=${query}`;
+    }
+    return this.http.get<PostsResponse>(`${url}`);
   }
 
   getPost(slug: string) {

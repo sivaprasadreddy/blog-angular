@@ -1,20 +1,16 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {PostService} from "../../services/post.service";
-import {CommonModule} from "@angular/common";
-import {PostsResponse} from '../../services/models';
-import {PaginationComponent} from '../../components/pagination/pagination.component';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PostService } from '../../services/post.service';
+import { CommonModule } from '@angular/common';
+import { PostsResponse } from '../../services/models';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './posts.component.html',
-  imports: [
-    CommonModule,
-    PaginationComponent,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, PaginationComponent, ReactiveFormsModule],
 })
 export class PostsComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -29,29 +25,31 @@ export class PostsComponent implements OnInit {
     currentPageNo: 0,
     totalPages: 0,
     hasNextPage: false,
-    hasPreviousPage: false
+    hasPreviousPage: false,
   });
 
   searchForm = this.fb.group({
-    query: ['', [Validators.required, Validators.pattern(/\S/)]]
+    query: ['', [Validators.required, Validators.pattern(/\S/)]],
   });
 
   ngOnInit(): void {
     this.fetchPosts();
 
-    this.route.queryParamMap.subscribe(params => {
-      this.page.set(parseInt(params.get('page') || "1"));
+    this.route.queryParamMap.subscribe((params) => {
+      this.page.set(parseInt(params.get('page') || '1'));
       this.fetchPosts();
     });
   }
 
   fetchPosts() {
-    this.postService.getPosts(this.page(), this.searchForm.value.query || '').subscribe(response => {
-      this.posts.set(response);
-    });
+    this.postService
+      .getPosts(this.page(), this.searchForm.value.query || '')
+      .subscribe((response) => {
+        this.posts.set(response);
+      });
   }
 
   search() {
-    this.router.navigate(['/posts'], {queryParams: {query: this.searchForm.value.query}});
+    this.router.navigate(['/posts'], { queryParams: { query: this.searchForm.value.query } });
   }
 }

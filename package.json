@@ -29,11 +29,8 @@
     "@angular/build": "^22.0.4",
     "@angular/cli": "~22.0.4",
     "@angular/compiler-cli": "^22.0.4",
-    "@tailwindcss/postcss": "^4.3.2",
     "baseline-browser-mapping": "^2.10.40",
     "jsdom": "^29.1.1",
-    "postcss": "^8.5.16",
-    "tailwindcss": "^4.3.2",
     "typescript": "~6.0.3",
     "vitest": "^4.1.9"
   },

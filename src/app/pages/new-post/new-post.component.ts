@@ -1,16 +1,14 @@
-import {Component, inject, signal} from '@angular/core';
-import {Router} from "@angular/router";
-import {PostService} from "../../services/post.service";
-import {PostUserView} from '../../services/models';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { PostService } from '../../services/post.service';
+import { PostUserView } from '../../services/models';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'new-post',
   standalone: true,
   templateUrl: './new-post.component.html',
-  imports: [
-    ReactiveFormsModule
-  ],
+  imports: [ReactiveFormsModule],
 })
 export class NewPostComponent {
   private router = inject(Router);
@@ -25,7 +23,7 @@ export class NewPostComponent {
     content: '',
     createdByUserName: '',
     createdAt: new Date(),
-    comments: []
+    comments: [],
   });
 
   newPostForm = this.fb.group({
@@ -35,17 +33,19 @@ export class NewPostComponent {
   });
 
   createPost() {
-    this.postService.createPost({
-      title: this.newPostForm.value.title!,
-      slug: this.newPostForm.value.slug!,
-      content: this.newPostForm.value.content!,
-    }).subscribe(() => {
-      this.router.navigate(['/posts']);
-    });
+    this.postService
+      .createPost({
+        title: this.newPostForm.value.title!,
+        slug: this.newPostForm.value.slug!,
+        content: this.newPostForm.value.content!,
+      })
+      .subscribe(() => {
+        this.router.navigate(['/posts']);
+      });
   }
 
   fetchPost() {
-    this.postService.getPost(this.slug()).subscribe(response => {
+    this.postService.getPost(this.slug()).subscribe((response) => {
       this.post.set(response);
     });
   }

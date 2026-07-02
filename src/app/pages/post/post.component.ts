@@ -1,20 +1,16 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
-import {ActivatedRoute, RouterLink} from "@angular/router";
-import {PostService} from "../../services/post.service";
-import {CommonModule} from "@angular/common";
-import {PostUserView} from '../../services/models';
-import {AuthService} from '../../services/auth.service';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { PostService } from '../../services/post.service';
+import { CommonModule } from '@angular/common';
+import { PostUserView } from '../../services/models';
+import { AuthService } from '../../services/auth.service';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'post',
   standalone: true,
   templateUrl: './post.component.html',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink
-  ],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
 })
 export class PostComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -30,7 +26,7 @@ export class PostComponent implements OnInit {
     content: '',
     createdByUserName: '',
     createdAt: new Date(),
-    comments: []
+    comments: [],
   });
 
   commentForm = this.fb.group({
@@ -40,7 +36,7 @@ export class PostComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       this.slug.set(params.get('slug') || '');
       if (this.slug()) {
         this.fetchPost();
@@ -53,22 +49,24 @@ export class PostComponent implements OnInit {
   }
 
   fetchPost() {
-    this.postService.getPost(this.slug()).subscribe(response => {
-      this.post.set(Object.assign(response, {comments: []}));
-      this.postService.getPostComments(this.slug()).subscribe(comments => {
-        this.post.update(p => ({...p, comments}));
+    this.postService.getPost(this.slug()).subscribe((response) => {
+      this.post.set(Object.assign(response, { comments: [] }));
+      this.postService.getPostComments(this.slug()).subscribe((comments) => {
+        this.post.update((p) => ({ ...p, comments }));
       });
     });
   }
 
   createComment() {
-    this.postService.createComment(this.slug(), {
-      name: this.commentForm.value.name!,
-      email: this.commentForm.value.email!,
-      content: this.commentForm.value.content!,
-    }).subscribe(() => {
-      this.commentForm.reset();
-      this.fetchPost();
-    });
+    this.postService
+      .createComment(this.slug(), {
+        name: this.commentForm.value.name!,
+        email: this.commentForm.value.email!,
+        content: this.commentForm.value.content!,
+      })
+      .subscribe(() => {
+        this.commentForm.reset();
+        this.fetchPost();
+      });
   }
 }

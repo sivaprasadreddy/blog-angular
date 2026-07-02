@@ -1,14 +1,23 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" role="navigation"
-    aria-label="main navigation">
+  <nav
+    class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top"
+    role="navigation"
+    aria-label="main navigation"
+  >
     <div class="container">
       <a class="navbar-brand" href="/">
         <span class="fs-3 fw-bold">SivaLabs Blog</span>
       </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarMain" aria-controls="navbarMain"
-        aria-expanded="false" aria-label="Toggle navigation">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarMain"
+        aria-controls="navbarMain"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -16,14 +25,10 @@
         <div class="ms-auto">
           <div class="d-flex">
             @if (!isLoggedIn()) {
-              <a class="btn btn-primary" routerLink="/login">
-                Login
-              </a>
+              <a class="btn btn-primary" routerLink="/login"> Login </a>
             }
             @if (isLoggedIn()) {
-              <a class="btn btn-primary me-2" href="#" routerLink="/posts/new">
-                New Post
-              </a>
+              <a class="btn btn-primary me-2" href="#" routerLink="/posts/new"> New Post </a>
             }
             @if (isLoggedIn()) {
               <a class="btn btn-primary" href="#" (click)="logout()">
