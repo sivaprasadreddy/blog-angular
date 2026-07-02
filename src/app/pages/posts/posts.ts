@@ -3,16 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../../services/post.service';
 import { CommonModule } from '@angular/common';
 import { PostsResponse } from '../../services/models';
-import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { Pagination } from '../../components/pagination/pagination';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  templateUrl: './posts.component.html',
-  imports: [CommonModule, PaginationComponent, ReactiveFormsModule],
+  templateUrl: './posts.html',
+  imports: [CommonModule, Pagination, ReactiveFormsModule],
 })
-export class PostsComponent implements OnInit {
+export class Posts implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private postService = inject(PostService);

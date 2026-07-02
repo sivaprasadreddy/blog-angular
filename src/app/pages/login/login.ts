@@ -7,10 +7,10 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
-  templateUrl: './login.component.html',
+  templateUrl: './login.html',
   imports: [ReactiveFormsModule, NgClass],
 })
-export class LoginComponent {
+export class Login {
   private authService = inject(AuthService);
   private router = inject(Router);
   private fb = inject(FormBuilder);

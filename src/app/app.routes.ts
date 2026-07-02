@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './auth.guard';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { PageNotFound } from './pages/page-not-found/page-not-found';
 
 export const routes: Routes = [
   {
@@ -10,30 +10,28 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./pages/login/login.component').then((mod) => mod.LoginComponent),
+    loadComponent: () => import('./pages/login/login').then((mod) => mod.Login),
   },
   {
     path: 'posts',
-    loadComponent: () => import('./pages/posts/posts.component').then((mod) => mod.PostsComponent),
+    loadComponent: () => import('./pages/posts/posts').then((mod) => mod.Posts),
   },
   {
     path: 'posts/new',
-    loadComponent: () =>
-      import('./pages/new-post/new-post.component').then((mod) => mod.NewPostComponent),
+    loadComponent: () => import('./pages/new-post/new-post').then((mod) => mod.NewPost),
     canActivate: [authGuard],
   },
   {
     path: 'posts/:slug',
-    loadComponent: () => import('./pages/post/post.component').then((mod) => mod.PostComponent),
+    loadComponent: () => import('./pages/post/post').then((mod) => mod.Post),
   },
   {
     path: 'posts/:slug/edit',
-    loadComponent: () =>
-      import('./pages/edit-post/edit-post.component').then((mod) => mod.EditPostComponent),
+    loadComponent: () => import('./pages/edit-post/edit-post').then((mod) => mod.EditPost),
     canActivate: [authGuard],
   },
   {
     path: '**',
-    component: PageNotFoundComponent,
+    component: PageNotFound,
   },
 ];

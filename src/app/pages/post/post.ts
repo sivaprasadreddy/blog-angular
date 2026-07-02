@@ -9,10 +9,10 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 @Component({
   selector: 'post',
   standalone: true,
-  templateUrl: './post.component.html',
+  templateUrl: './post.html',
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
 })
-export class PostComponent implements OnInit {
+export class Post implements OnInit {
   private route = inject(ActivatedRoute);
   private postService = inject(PostService);
   private authService = inject(AuthService);

@@ -6,10 +6,10 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'app-pagination',
   standalone: true,
-  templateUrl: './pagination.component.html',
+  templateUrl: './pagination.html',
   imports: [RouterLink, NgClass],
 })
-export class PaginationComponent {
+export class Pagination {
   query = input('');
 
   postsResponse = input<PostsResponse>({

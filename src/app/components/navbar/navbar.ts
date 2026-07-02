@@ -5,10 +5,10 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  templateUrl: './navbar.component.html',
+  templateUrl: './navbar.html',
   imports: [RouterLink],
 })
-export class NavbarComponent {
+export class Navbar {
   private authService = inject(AuthService);
 
   isLoggedIn = this.authService.loggedIn;
