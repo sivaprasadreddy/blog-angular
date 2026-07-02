@@ -13,7 +13,7 @@
 
   <div class="row">
     <div class="col-12">
-      @for (post of posts.data; track post) {
+      @for (post of posts().data; track post) {
         <div class="card mb-3">
           <div class="card-body">
             <a class="h4 text-decoration-none pt-1" href="/posts/{{post.slug}}">
@@ -36,5 +36,5 @@
         }
       </div>
     </div>
-    <app-pagination [postsResponse]="posts" [query]="searchForm.value.query || ''"></app-pagination>
+    <app-pagination [postsResponse]="posts()" [query]="searchForm.value.query || ''"></app-pagination>
   </div>

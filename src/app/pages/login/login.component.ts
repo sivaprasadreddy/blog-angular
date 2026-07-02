@@ -1,8 +1,8 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import { NgClass } from "@angular/common";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-login',
@@ -11,14 +11,15 @@ import { NgClass } from "@angular/common";
   imports: [
     ReactiveFormsModule,
     NgClass
-],
+  ],
 })
 export class LoginComponent {
+  private authService = inject(AuthService);
+  private router = inject(Router);
   private fb = inject(FormBuilder);
-  constructor(private authService: AuthService,
-              private router: Router) {
-  }
-  error : string | null = null;
+
+  error = signal<string | null>(null);
+
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email, Validators.pattern(/\S/)]],
     password: ['', [Validators.required, Validators.pattern(/\S/)]]
@@ -26,16 +27,15 @@ export class LoginComponent {
 
   login() {
     this.authService.login({
-      email: this.loginForm.value.email ||"",
-      password: this.loginForm.value.password ||"",
+      email: this.loginForm.value.email || '',
+      password: this.loginForm.value.password || '',
     }).subscribe({
       next: response => {
-          console.log("login response:", response)
-          this.authService.setAuthUser(response);
-          this.router.navigate(['/'])
+        this.authService.setAuthUser(response);
+        this.router.navigate(['/']);
       },
       error: () => {
-        this.error = "Invalid credentials"
+        this.error.set('Invalid credentials');
       }
     });
   }

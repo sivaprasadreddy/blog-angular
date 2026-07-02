@@ -49,14 +49,6 @@ export interface Comment {
   createdAt: Date
 }
 
-
-export interface User {
-  id: number
-  name: string
-  email: string
-  role: string
-}
-
 export interface CreatePostPayload {
   title: string
   slug: string

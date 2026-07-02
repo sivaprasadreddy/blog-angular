@@ -1,13 +1,13 @@
 <div class="container">
   <div class="pt-3 pb-1">
-    <h2 class="display-5">{{post.title}}</h2>
+    <h2 class="display-5">{{post().title}}</h2>
     <div class="pt-1">
       <div class="pb-1">
         <span class="me-2">
-          <i class="fa fa-user"></i> <strong>{{post.createdByUserName}}</strong>
+          <i class="fa fa-user"></i> <strong>{{post().createdByUserName}}</strong>
         </span>
         <span class="me-2">
-          <i class="fa fa-calendar"></i> <strong>{{post.createdAt | date}}</strong>
+          <i class="fa fa-calendar"></i> <strong>{{post().createdAt | date}}</strong>
         </span>
       </div>
       <div class="post-actions">
@@ -15,7 +15,7 @@
           @if (isLoggedIn()) {
             <a class="btn btn-outline-primary"
               href="#"
-              [routerLink]="['/posts', post.slug, 'edit']"
+              [routerLink]="['/posts', post().slug, 'edit']"
               title="Edit Post">
               <i class="fa-solid fa-pen-to-square"></i>
               <span>Edit Post</span>
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="pt-2 pb-2">{{post.content}}</div>
+    <div class="pt-2 pb-2">{{post().content}}</div>
   </div>
   <hr/>
   <div>
@@ -58,12 +58,12 @@
       </div>
     </form>
 
-    @if (post.comments.length == 0) {
+    @if (post().comments.length == 0) {
       <div class="card p-4 mt-3">
         <p class="h2">No comments yet!</p>
       </div>
     }
-    @for (comment of post.comments; track comment) {
+    @for (comment of post().comments; track comment) {
       <div class="card p-4 mt-3">
         <div>
           <p><b>Name : </b><strong>{{comment.name}}</strong></p>

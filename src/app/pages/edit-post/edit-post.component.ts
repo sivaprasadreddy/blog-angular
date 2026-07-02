@@ -1,7 +1,6 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {PostService} from "../../services/post.service";
-
 import {PostUserView} from '../../services/models';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 
@@ -11,24 +10,24 @@ import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
   templateUrl: './edit-post.component.html',
   imports: [
     ReactiveFormsModule
-],
+  ],
 })
 export class EditPostComponent implements OnInit {
-  slug = ""
-  post: PostUserView = {
-      id: 0,
-      slug: '',
-      title: '',
-      content: '',
-      createdByUserName: '',
-      createdAt: new Date(),
-      comments: []
-    }
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private postService = inject(PostService);
   private fb = inject(FormBuilder);
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private postService: PostService) {
-  }
+
+  slug = signal('');
+  post = signal<PostUserView>({
+    id: 0,
+    slug: '',
+    title: '',
+    content: '',
+    createdByUserName: '',
+    createdAt: new Date(),
+    comments: []
+  });
 
   editPostForm = this.fb.group({
     title: ['', [Validators.required, Validators.pattern(/\S/)]],
@@ -37,38 +36,32 @@ export class EditPostComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.route.paramMap
-      .subscribe(params => {
-          this.slug = params.get('slug') || "";
-          if (this.slug) {
-            this.fetchPost()
-          }
-        }
-      );
+    this.route.paramMap.subscribe(params => {
+      this.slug.set(params.get('slug') || '');
+      if (this.slug()) {
+        this.fetchPost();
+      }
+    });
   }
 
   updatePost() {
-    console.log(this.editPostForm.value)
-    this.postService.updatePost(
-      this.slug,
-      {
+    this.postService.updatePost(this.slug(), {
       title: this.editPostForm.value.title!,
       slug: this.editPostForm.value.slug!,
       content: this.editPostForm.value.content!,
-    }).subscribe(response => {
-      this.router.navigate(['/posts', this.editPostForm.value.slug!])
-    })
+    }).subscribe(() => {
+      this.router.navigate(['/posts', this.editPostForm.value.slug!]);
+    });
   }
 
   fetchPost() {
-    this.postService.getPost(this.slug).subscribe(response => {
-      console.log(response)
-      this.post = response;
+    this.postService.getPost(this.slug()).subscribe(response => {
+      this.post.set(response);
       this.editPostForm.setValue({
-        title: this.post.title,
-        slug: this.post.slug,
-        content: this.post.content,
-      })
-    })
+        title: this.post().title,
+        slug: this.post().slug,
+        content: this.post().content,
+      });
+    });
   }
 }

@@ -1,7 +1,6 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {Router} from "@angular/router";
 import {PostService} from "../../services/post.service";
-
 import {PostUserView} from '../../services/models';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 
@@ -11,23 +10,23 @@ import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
   templateUrl: './new-post.component.html',
   imports: [
     ReactiveFormsModule
-],
+  ],
 })
-export class NewPostComponent implements OnInit {
-  slug = ""
-  post: PostUserView = {
-      id: 0,
-      slug: '',
-      title: '',
-      content: '',
-      createdByUserName: '',
-      createdAt: new Date(),
-      comments: []
-    }
+export class NewPostComponent {
+  private router = inject(Router);
+  private postService = inject(PostService);
   private fb = inject(FormBuilder);
-  constructor(private router: Router,
-              private postService: PostService) {
-  }
+
+  slug = signal('');
+  post = signal<PostUserView>({
+    id: 0,
+    slug: '',
+    title: '',
+    content: '',
+    createdByUserName: '',
+    createdAt: new Date(),
+    comments: []
+  });
 
   newPostForm = this.fb.group({
     title: ['', [Validators.required, Validators.pattern(/\S/)]],
@@ -35,27 +34,19 @@ export class NewPostComponent implements OnInit {
     content: ['', [Validators.required, Validators.pattern(/\S/)]],
   });
 
-  ngOnInit(): void {
-
-  }
-
   createPost() {
-    console.log(this.newPostForm.value)
-    this.postService.createPost(
-      {
+    this.postService.createPost({
       title: this.newPostForm.value.title!,
       slug: this.newPostForm.value.slug!,
       content: this.newPostForm.value.content!,
-    }).subscribe(response => {
-      //console.log('update post response:',response)
-      this.router.navigate(['/posts'])
-    })
+    }).subscribe(() => {
+      this.router.navigate(['/posts']);
+    });
   }
 
   fetchPost() {
-    this.postService.getPost(this.slug).subscribe(response => {
-      console.log(response)
-      this.post = response;
-    })
+    this.postService.getPost(this.slug()).subscribe(response => {
+      this.post.set(response);
+    });
   }
 }

@@ -10,21 +10,21 @@
         <input type="text" class="form-control" id="title"
                placeholder="Enter title" name="title"
                formControlName="title"
-               value="{{post.title}}"/>
+               value="{{post().title}}"/>
       </div>
       <div class="mb-3">
         <label for="slug" class="form-label">Slug</label>
         <input type="text" class="form-control" id="slug"
                placeholder="Enter slug" name="slug"
                formControlName="slug"
-               value="{{post.slug}}"/>
+               value="{{post().slug}}"/>
       </div>
       <div class="mb-3">
         <label for="content" class="form-label">Content</label>
         <textarea class="form-control" id="content"
               placeholder="Enter content" rows="8" name="content"
               formControlName="content"
-              value="{{post.content}}"></textarea>
+              value="{{post().content}}"></textarea>
       </div>
 
       <div class="mb-3">

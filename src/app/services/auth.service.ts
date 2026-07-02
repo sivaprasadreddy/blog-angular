@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import {CreateUserRequest, CreateUserResponse, LoginRequest, LoginResponse} from "./models";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
@@ -10,6 +10,9 @@ import { environment } from "../../environments/environment"
 export class AuthService {
   private apiBaseUrl = environment.apiBaseUrl;
 
+  private _loggedIn = signal<boolean>(!!localStorage.getItem("token"));
+  readonly loggedIn = this._loggedIn.asReadonly();
+
   constructor(private http: HttpClient) { }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
@@ -20,14 +23,14 @@ export class AuthService {
     return this.http.post<CreateUserResponse>(`${this.apiBaseUrl}/api/users`, request);
   }
 
-   setAuthUser(loginResponse: LoginResponse) {
-    //console.log("auth resp:", loginResponse)
+  setAuthUser(loginResponse: LoginResponse) {
     localStorage.setItem("token", loginResponse.token)
     localStorage.setItem("auth", JSON.stringify(loginResponse))
+    this._loggedIn.set(true);
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem("token")
+    return this._loggedIn();
   }
 
   loginUserName(): string {
@@ -42,6 +45,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem("auth")
     localStorage.removeItem("token")
+    this._loggedIn.set(false);
   }
 
   getAuthToken() : string | null {

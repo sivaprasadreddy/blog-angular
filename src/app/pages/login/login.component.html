@@ -19,7 +19,7 @@
           <button type="submit" class="btn btn-primary"
           [ngClass]="{'disabled': loginForm.invalid}">Login</button>
         </div>
-        @if (error) {
+        @if (error()) {
           <div class="text-danger text-center fw-bold">
             <div>Invalid Email and Password</div>
           </div>

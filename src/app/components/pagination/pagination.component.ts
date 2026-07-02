@@ -1,7 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {PostsResponse} from "../../services/models";
 import {RouterLink} from "@angular/router";
-import { NgClass } from "@angular/common";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-pagination',
@@ -13,16 +13,14 @@ import { NgClass } from "@angular/common";
   ],
 })
 export class PaginationComponent {
-  @Input()
-  query = ""
+  query = input('');
 
-  @Input()
-  postsResponse : PostsResponse = {
+  postsResponse = input<PostsResponse>({
     data: [],
     hasNextPage: false,
     hasPreviousPage: false,
     currentPageNo: 0,
     totalElements: 0,
     totalPages: 0
-  }
+  });
 }

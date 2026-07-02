@@ -4,17 +4,17 @@
       <a class="page-link"
          href="#" [routerLink]="['/posts']"
          [queryParams]="{
-      page: postsResponse.currentPageNo - 1,
-      query: query}"
-         [ngClass]="{'disabled': !postsResponse.hasPreviousPage}"
+      page: postsResponse().currentPageNo - 1,
+      query: query()}"
+         [ngClass]="{'disabled': !postsResponse().hasPreviousPage}"
       >Newer Posts</a>
     </li>
     <li class="page-item">
       <a href="#" class="page-link"
          [routerLink]="['/posts']" [queryParams]="{
-      page: postsResponse.currentPageNo + 1 ,
-      query: query}"
-         [ngClass]="{'disabled': !postsResponse.hasNextPage}"
+      page: postsResponse().currentPageNo + 1 ,
+      query: query()}"
+         [ngClass]="{'disabled': !postsResponse().hasNextPage}"
       >Older Posts</a>
     </li>
   </ul>
