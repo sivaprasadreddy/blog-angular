@@ -31,6 +31,12 @@
                   <i class="fa fa-calendar"></i>&nbsp;
                   <strong>{{ post.createdAt | date }}</strong>
                 </span>
+                @if (post.categoryName) {
+                  <span class="me-1">
+                    <i class="fa fa-folder"></i>&nbsp;
+                    <strong>{{ post.categoryName }}</strong>
+                  </span>
+                }
               </div>
               <p>{{ post.content }}</p>
             </div>

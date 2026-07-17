@@ -22,8 +22,8 @@ export interface CreateUserResponse {
   name: string;
 }
 
-export interface PostsResponse {
-  data: PostUserView[];
+export interface PagedResult<T> {
+  data: T[];
   totalElements: number;
   currentPageNo: number;
   totalPages: number;
@@ -31,15 +31,29 @@ export interface PostsResponse {
   hasPreviousPage: boolean;
 }
 
+export type PostsResponse = PagedResult<PostUserView>;
+
+export type CommentsResponse = PagedResult<Comment>;
+
 export interface PostUserView {
   id: number;
   title: string;
   slug: string;
   content: string;
+  categorySlug?: string;
+  categoryName?: string;
   authorId: number;
   authorName: string;
   createdAt: Date;
   comments: Comment[];
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Comment {
@@ -54,12 +68,14 @@ export interface CreatePostPayload {
   title: string;
   slug: string;
   content: string;
+  categorySlug?: string;
 }
 
 export interface UpdatePostPayload {
   title: string;
   slug: string;
   content: string;
+  categorySlug?: string;
 }
 
 export interface CreateCommentPayload {

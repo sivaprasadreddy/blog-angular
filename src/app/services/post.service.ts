@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import {
-  Comment,
+  CommentsResponse,
   CreateCommentPayload,
   CreatePostPayload,
   PostsResponse,
   PostUserView,
   UpdatePostPayload,
 } from './models';
-import { Observable } from 'rxjs';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,7 @@ export class PostService {
 
   getPostComments(slug: string) {
     let url = `${this.apiBaseUrl}/api/posts/${slug}/comments`;
-    return this.http.get<Comment[]>(`${url}`);
+    return this.http.get<CommentsResponse>(`${url}`).pipe(map((response) => response.data));
   }
 
   createPost(payload: CreatePostPayload) {

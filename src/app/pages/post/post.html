@@ -9,6 +9,11 @@
         <span class="me-2">
           <i class="fa fa-calendar"></i> <strong>{{ post().createdAt | date }}</strong>
         </span>
+        @if (post().categoryName) {
+          <span class="me-2">
+            <i class="fa fa-folder"></i> <strong>{{ post().categoryName }}</strong>
+          </span>
+        }
       </div>
       <div class="post-actions">
         <div class="pt-2">
