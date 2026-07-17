@@ -53,6 +53,15 @@ export class AuthService {
     return '';
   }
 
+  loginUserId(): number | null {
+    const auth = localStorage.getItem(AuthService.AUTH_KEY);
+    if (auth) {
+      const authJson = JSON.parse(auth) as LoginResponse;
+      return authJson.userId;
+    }
+    return null;
+  }
+
   logout(): void {
     localStorage.removeItem(AuthService.AUTH_KEY);
     localStorage.removeItem(AuthService.TOKEN_KEY);

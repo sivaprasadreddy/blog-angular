@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PostService } from '../../services/post.service';
 import { CommonModule } from '@angular/common';
@@ -45,9 +45,9 @@ export class Post implements OnInit {
     });
   }
 
-  isLoggedIn(): boolean {
-    return this.authService.isLoggedIn();
-  }
+  canEdit = computed(
+    () => this.authService.isLoggedIn() && this.authService.loginUserId() === this.post().authorId,
+  );
 
   fetchPost() {
     this.postService.getPost(this.slug()).subscribe((response) => {
